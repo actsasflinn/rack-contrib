@@ -25,7 +25,7 @@ context "Rack::JSONP" do
   end
 
   specify "should not change anything if no callback param is provided" do
-    app = lambda { |env| [200, {'Content-Type' => 'text/plain'}, '{"bar":"foo"}'] }
+    app = lambda { |env| [200, {'Content-Type' => 'text/plain'}, ['{"bar":"foo"}']] }
     request = Rack::MockRequest.env_for("/", :input => "foo=bar")
     body = Rack::JSONP.new(app).call(request).last
     body.join.should.equal '{"bar":"foo"}'
